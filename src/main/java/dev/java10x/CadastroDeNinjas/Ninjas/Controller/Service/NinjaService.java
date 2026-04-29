@@ -2,10 +2,9 @@ package dev.java10x.CadastroDeNinjas.Ninjas.Controller.Service;
 
 import org.springframework.stereotype.Service;
 
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
@@ -19,8 +18,12 @@ public class NinjaService {
     }
 
     // Listar todos os meus Ninjas
-    public List<NinjaModel> listarNinjas() {
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> listarNinjas() {
+        List<NinjaModel> ninjas = ninjaRepository.findAll();
+        return ninjas.stream()
+                .map(ninjaMapper::map)
+                .collect(Collectors.toList());
+
 
     }
 
@@ -44,10 +47,10 @@ public class NinjaService {
     }
 
     //Atualizar Ninja
-    public NinjaModel atualizarNinja(Long id, NinjaModel ninjaAtualizado) {
+    public NinjaModel atualizarNinja(Long id, NinjaDTO ninjaAtualizado) {
         if (ninjaRepository.existsById(id)) {
             ninjaAtualizado.setId(id);
-            return ninjaRepository.save(ninjaAtualizado);
+            return ninjaRepository.save(ninjaMapper.map(ninjaAtualizado));
         }
         else  {
             return null;

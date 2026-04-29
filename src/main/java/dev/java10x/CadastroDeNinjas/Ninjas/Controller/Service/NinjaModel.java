@@ -6,40 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-// Entity ele transforma uma classe em uma entidade do banco de dados
 @Entity
 @Table(name = "tb_cadastro")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
 public class NinjaModel {
-
+   // seus campos aqui, ex:
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column (name="id")
-   private long id;
-
-   @Column(name = "nome")
+   private Long id;
    private String nome;
-
-   @Column(unique = true)
    private String email;
-
-   @Column(name = "img_url")
    private String imgUrl;
-
-   @Column (name = "rank")
+   private int idade;
    private String rank;
 
-   @Column (name = "idade")
-   private int idade;
-
-
-   // @ManytoOne --> 1 Ninja tem uma unica missao
    @ManyToOne
-   @JoinColumn(name = "missoes_id")  // Foreing King ou chave estrangeira
    private MissoesModel missoes;
 }
