@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/ninjas")
 public class NinjaController {
 
-    private NinjaService ninjaService;
+    private final NinjaService ninjaService;
     private int ok;
 
     public NinjaController(NinjaService ninjaService) {
@@ -21,6 +21,7 @@ public class NinjaController {
     public String boasVindas() {
         return "Essa é a minha primeira mensagem nessa rota !";
     }
+
 
     // Adicionar Ninja (Create)
     @PostMapping("/criar")
