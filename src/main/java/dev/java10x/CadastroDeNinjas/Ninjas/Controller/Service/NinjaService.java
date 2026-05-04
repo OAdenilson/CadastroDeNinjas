@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class NinjaService {
 
     private final NinjaRepository ninjaRepository;
-    private final  NinjaMapper ninjaMapper;
+    private final NinjaMapper ninjaMapper;
 
     public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
@@ -24,7 +24,6 @@ public class NinjaService {
                 .map(ninjaMapper::map)
                 .collect(Collectors.toList());
 
-
     }
 
     // Listar todos os meus Ninjas por ID
@@ -35,7 +34,7 @@ public class NinjaService {
     }
 
     //Criar um novo Ninja
-    public NinjaDTO criarNinjas(NinjaDTO ninjaDTO) {
+    public NinjaDTO criarNinja(NinjaDTO ninjaDTO) {
         NinjaModel ninja = ninjaMapper.map(ninjaDTO);
         ninjaRepository.save(ninja);
         return ninjaMapper.map(ninja);
@@ -51,8 +50,7 @@ public class NinjaService {
         if (ninjaRepository.existsById(id)) {
             ninjaAtualizado.setId(id);
             return ninjaRepository.save(ninjaMapper.map(ninjaAtualizado));
-        }
-        else  {
+        } else {
             return null;
         }
     }

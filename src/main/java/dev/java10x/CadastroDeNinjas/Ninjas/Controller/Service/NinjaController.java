@@ -26,12 +26,11 @@ public class NinjaController {
     // Adicionar Ninja (Create)
     @PostMapping("/criar")
     public ResponseEntity<String> criarNinja(@RequestBody NinjaDTO ninjaDTO) {
-       NinjaDTO novoNinja =  ninjaService.criarNinjas(ninjaDTO);
+       NinjaDTO novoNinja =  ninjaService.criarNinja(ninjaDTO);
        return ResponseEntity.status(HttpStatus.CREATED)
         .body("Ninja criado com sucesso : " +  novoNinja.getNome() + "(id): " +  novoNinja.getId());
 
     }
-
     //Mostrar todos os  Ninjas (READ)
     @GetMapping("/listar")
     public ResponseEntity<List<NinjaDTO>> listarNinjas() {

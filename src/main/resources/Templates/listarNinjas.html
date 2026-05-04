@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Tabela de Ninjas</title>
+    <style>
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            color: #fff;
+            padding: 40px;
+        }
+
+        /* TITLE */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            color: #00f5d4;
+        }
+
+        /* BUTTON */
+        .btn-adicionar {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #ff006e, #ffbe0b);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-adicionar:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 0, 110, 0.6);
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2f2f4f;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* HEADER */
+        thead {
+            background: linear-gradient(45deg, #00f5d4, #0bbcd6);
+        }
+
+        thead th {
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: #1e1e2f;
+        }
+
+        /* BODY */
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #3a3a5a;
+        }
+
+        tbody tr:hover {
+            background: #4a4a7a;
+            transform: scale(1.01);
+        }
+
+        /* CELLS */
+        td {
+            padding: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        /* IMAGE */
+        td img {
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        td img:hover {
+            transform: scale(1.2);
+        }
+
+        /* LINKS (AÇÕES) */
+        td a {
+            display: inline-block;
+            margin: 5px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* BOTÕES DE AÇÃO */
+        td a:nth-child(1) {
+            background: #3a86ff;
+            color: #fff;
+        }
+
+        td a:nth-child(2) {
+            background: #8338ec;
+            color: #fff;
+        }
+
+        td a:nth-child(3) {
+            background: #ff006e;
+            color: #fff;
+        }
+
+        /* HOVER BOTÕES */
+        td a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 15px;
+                background: #2f2f4f;
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            td {
+                text-align: right;
+                padding: 10px;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                color: #00f5d4;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<h1>Lista de ninjas</h1>
+<a class="btn-adicionar" th:href="@{/ninjas/ui/adicionar}">Adicionar Novo Ninja</a>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Imagem</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Email</th>
+        <th>Rank</th>
+        <th>Missoes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each ="ninja: ${ninjas}">
+        <td th:text="${ninja.id}"></td>
+        <td> <img th:src="${ninja.imgUrl}" width="100" height="100"></td>
+        <td th:text="${ninja.nome}"></td>
+        <td th:text="${ninja.idade}"></td>
+        <td th:text="${ninja.email}"></td>
+        <td th:text="${ninja.rank}"></td>
+        <td>
+            <span th:if="${ninja.missoes}"><span th:text="${ninja.missoes.nome}"></span>, Dificuldade: <span th:text="${ninja.missoes.dificuldade}"></span></span>
+            <span th:if="${ninja.missoes == null}">Sem Missões cadastradas para o ninja</span>
+        </td>
+
+        <td>
+            <a th:href="@{/ninjas/ui/listar/{id}(id=${ninja.id})}">Ver Detalhes</a>
+            <a th:href="@{/ninjas/ui/#/{id}(id=${ninja.id})}">Alterar</a>
+            <a th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}">Deletar</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+</body>
+</html>
